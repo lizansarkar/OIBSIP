@@ -7,6 +7,13 @@ import rateLimit from "express-rate-limit";
 import { ENV } from "./config/env.js";
 import { connectDB, getDatabaseStatus } from "./config/db.js";
 import { errorHandler } from "./middleware/error.js";
+import { initCronJobs } from "./services/cron.js";
+import { authRouter } from "./routes/auth.js";
+import { productsRouter } from "./routes/products.js";
+import { ingredientsRouter } from "./routes/ingredients.js";
+import { ordersRouter } from "./routes/orders.js";
+import { paymentsRouter } from "./routes/payments.js";
+import { adminRouter } from "./routes/admin.js";
 import type { ApiResponse, HealthStatus } from "@workspace/shared";
 
 const app = express();
@@ -34,11 +41,11 @@ app.use(cookieParser());
 
 // Global Rate Limiter
 const generalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 300,
   message: {
     success: false,
-    error: "Too many requests from this IP. Please try again after 15 minutes.",
+    error: "Too many requests. Please try again after 15 minutes.",
   },
   standardHeaders: true,
   legacyHeaders: false,
@@ -58,13 +65,21 @@ app.get("/api/health", (_req, res) => {
 
   const response: ApiResponse<HealthStatus> = {
     success: true,
-    message: "CRUST & CO. Pizza API is active and operational.",
+    message: "CRUST & CO. Pizza Delivery API is active and operational.",
     data: healthData,
     timestamp: new Date().toISOString(),
   };
 
   res.status(200).json(response);
 });
+
+// Mount API Modules
+app.use("/api/auth", authRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/ingredients", ingredientsRouter);
+app.use("/api/orders", ordersRouter);
+app.use("/api/payments", paymentsRouter);
+app.use("/api/admin", adminRouter);
 
 // Root Ping
 app.get("/", (_req, res) => {
@@ -75,12 +90,14 @@ app.get("/", (_req, res) => {
   });
 });
 
-// Error handling middleware
+// Centralized error handling middleware
 app.use(errorHandler);
 
 // Start Server & Connect Database
 export async function startServer() {
   await connectDB();
+  initCronJobs();
+
   return app.listen(ENV.PORT, () => {
     console.log(`===============================================`);
     console.log(`🍕 CRUST & CO. API Server Running`);
