@@ -66,11 +66,11 @@
   --popover: #FFFFFF;
   --popover-foreground: #191B18;
 
-  --primary: #F4770B;
+  --primary: #FF8A1F;
   --primary-foreground: #FFFFFF;
-  --primary-hover: #E06700;
+  --primary-hover: #F4770B;
 
-  --secondary: #638F38;
+  --secondary: #8BBF55;
   --secondary-foreground: #FFFFFF;
 
   --muted: #EAE8DE;
@@ -87,35 +87,35 @@
 
   --border: #E6E4DC;
   --input: #E6E4DC;
-  --ring: #F4770B;
+  --ring: #FF8A1F;
 
   --radius: 0.875rem;
 }
 
 .dark {
-  /* Dark Theme (Default) - Matching Reference Screenshot */
-  --background: #101110;
+  /* Pitch Black Charcoal Canvas - EXACT Match to Reference Screenshot */
+  --background: #0D0E0D;
   --foreground: #F7F5EF;
-  --surface: #191B18;
-  --surface-elevated: #22251F;
+  --surface: #171816;
+  --surface-elevated: #20221E;
 
-  --card: #191B18;
+  --card: #171816;
   --card-foreground: #F7F5EF;
 
-  --popover: #191B18;
+  --popover: #171816;
   --popover-foreground: #F7F5EF;
 
   --primary: #FF8A1F;
-  --primary-foreground: #101110;
+  --primary-foreground: #0D0E0D;
   --primary-hover: #F4770B;
 
   --secondary: #8BBF55;
-  --secondary-foreground: #101110;
+  --secondary-foreground: #0D0E0D;
 
-  --muted: #20231F;
+  --muted: #1F211D;
   --muted-foreground: #AAAFA5;
 
-  --accent: #262923;
+  --accent: #252822;
   --accent-foreground: #F7F5EF;
 
   --destructive: #E05252;
@@ -124,7 +124,7 @@
   --success: #3BAA70;
   --warning: #E8A23A;
 
-  --border: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.08);
   --input: rgba(255, 255, 255, 0.12);
   --ring: #FF8A1F;
 
@@ -135,37 +135,73 @@
   * {
     @apply border-border;
   }
+
+  /* Mandatory cursor pointer for all interactive and clickable elements */
+  button,
+  [role="button"],
+  a,
+  input[type="button"],
+  input[type="submit"],
+  select,
+  summary {
+    cursor: pointer !important;
+  }
+
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary/25 selection:text-primary;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
   }
 }
 
-/* Custom visual glow utilities inspired by reference mockup */
-.amber-glow {
-  box-shadow: 0 0 45px -8px rgba(255, 138, 31, 0.35);
+/* Distinctive warm amber radial glow exactly matching the screenshot button */
+.amber-glow-hero {
+  box-shadow: 0 0 50px 10px rgba(255, 138, 31, 0.45);
+}
+
+.amber-glow-btn {
+  box-shadow: 0 0 35px 4px rgba(255, 138, 31, 0.35);
 }
 
 .amber-glow-sm {
-  box-shadow: 0 0 25px -4px rgba(255, 138, 31, 0.25);
+  box-shadow: 0 0 20px 2px rgba(255, 138, 31, 0.3);
 }
 
 .green-glow-sm {
-  box-shadow: 0 0 20px -3px rgba(139, 191, 85, 0.3);
+  box-shadow: 0 0 16px 2px rgba(139, 191, 85, 0.3);
 }
 
 .card-elevation {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 35px -10px rgba(0, 0, 0, 0.6);
 }
 
-.subtle-glass {
-  background: rgba(25, 27, 24, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Floating Ember Sparks Particles Animation */
+@keyframes emberDrift {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-40px) translateX(15px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-80px) translateX(-10px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.ember-particle {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(circle, #ffaa40 0%, #ff6600 60%, transparent 100%);
+  filter: blur(1px);
+  pointer-events: none;
+  animation: emberDrift 4s ease-in-out infinite;
 }

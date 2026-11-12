@@ -160,7 +160,7 @@ export default function PizzaDetailsPage() {
                       <button
                         key={item.size}
                         onClick={() => setSelectedSize(item.size)}
-                        className={`rounded-2xl border p-3 text-center transition-all ${
+                        className={`rounded-2xl border p-3 text-center transition-all cursor-pointer ${
                           selectedSize === item.size
                             ? "border-primary bg-primary/10 shadow-md"
                             : "border-border bg-surface hover:bg-surface-elevated"
@@ -194,7 +194,7 @@ export default function PizzaDetailsPage() {
                   <div className="flex items-center gap-3 rounded-xl border border-border bg-surface p-1">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-surface-elevated hover:text-foreground cursor-pointer"
                     >
                       <Minus className="h-4 w-4" />
                     </button>
@@ -203,7 +203,7 @@ export default function PizzaDetailsPage() {
                     </span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-surface-elevated hover:text-foreground"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-surface-elevated hover:text-foreground cursor-pointer"
                     >
                       <Plus className="h-4 w-4" />
                     </button>
@@ -213,16 +213,16 @@ export default function PizzaDetailsPage() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     onClick={handleAddToCart}
-                    className="flex-1 h-12 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm amber-glow-sm flex items-center justify-center gap-2"
+                    className="flex-1 h-12 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm amber-glow-sm flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <ShoppingBag className="h-4 w-4" />
                     <span>Add to Cart (${totalPrice.toFixed(2)})</span>
                   </Button>
 
-                  <Link href="/custom-builder">
+                  <Link href="/custom-builder" className="cursor-pointer">
                     <Button
                       variant="outline"
-                      className="h-12 rounded-xl border-border bg-surface text-xs font-semibold px-4"
+                      className="h-12 rounded-xl border-border bg-surface text-xs font-semibold px-4 cursor-pointer"
                     >
                       <Sparkles className="h-4 w-4 mr-1 text-primary" />
                       Customize in Builder

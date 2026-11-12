@@ -16,11 +16,9 @@ import {
   Flame,
   ChefHat,
   Truck,
-  Timer,
   CheckCircle2,
   Star,
   ArrowRight,
-  ShieldAlert,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -40,40 +38,16 @@ export default function HomePage() {
       : SAMPLE_PRODUCTS.filter((p) => p.category === selectedCategory);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
+    <div className="flex min-h-screen flex-col bg-[#0D0E0D] text-[#F7F5EF]">
       <Header />
       <CartSheet />
 
       <main className="flex-1">
-        {/* 1. Hero Section matching Screenshot */}
+        {/* 1. Exact Visual Recreation of Reference Mockup */}
         <HeroSection />
 
-        {/* 2. Category Filter Pills Navigation (Inspired by Reference Screenshot) */}
-        <section className="sticky top-20 z-30 border-y border-border/80 bg-background/95 backdrop-blur-md py-4">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat.id;
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id)}
-                    className={`whitespace-nowrap px-5 py-2.5 rounded-full text-xs font-bold transition-all ${
-                      isActive
-                        ? "bg-primary text-black shadow-lg shadow-primary/20 scale-105"
-                        : "border border-border bg-surface text-muted-foreground hover:text-foreground hover:bg-surface-elevated"
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* 3. Featured Products Grid (With overlapping pizza graphics) */}
-        <section className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        {/* 2. Full Menu Showcase Section */}
+        <section id="menu" className="container mx-auto px-4 py-16 sm:px-6 lg:px-10 border-t border-white/5">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary uppercase tracking-wider mb-2">
@@ -83,13 +57,26 @@ export default function HomePage() {
                 Our Signature Creations
               </h2>
             </div>
-            <Link
-              href="/menu"
-              className="text-xs font-bold text-primary hover:underline inline-flex items-center gap-1"
-            >
-              <span>View Full Menu & Customizer</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+              {categories.map((cat) => {
+                const isActive = selectedCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? "bg-primary text-black shadow-md shadow-primary/20 scale-105"
+                        : "border border-border bg-surface text-muted-foreground hover:text-foreground hover:bg-surface-elevated"
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-y-12 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -99,8 +86,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 4. Interactive Custom Pizza Builder Callout Banner */}
-        <section className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        {/* 3. Interactive Custom Pizza Builder Banner */}
+        <section className="container mx-auto px-4 py-12 sm:px-6 lg:px-10">
           <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-gradient-to-r from-surface to-surface-elevated p-8 md:p-12 shadow-2xl">
             <div className="pointer-events-none absolute -right-20 -bottom-20 h-80 w-80 rounded-full bg-primary/20 blur-[100px]" />
             <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
@@ -112,16 +99,16 @@ export default function HomePage() {
                   Build Your Own Custom Pizza
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed max-w-xl">
-                  Choose from 5 artisanal dough bases (including our 48h living sourdough & four-cheese stuffed crust), 5 signature sauces, imported Italian cheeses, and over 15 gourmet farm-fresh vegetables and meats.
+                  Choose from 5 artisanal dough bases (including 48h living sourdough & four-cheese stuffed crust), 5 signature sauces, imported Italian cheeses, and over 15 gourmet farm-fresh vegetables and meats.
                 </p>
                 <div className="flex flex-wrap gap-4 pt-2">
-                  <Link href="/custom-builder">
-                    <Button className="h-12 px-7 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm amber-glow-sm">
+                  <Link href="/custom-builder" className="cursor-pointer">
+                    <Button className="h-12 px-7 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm amber-glow-sm cursor-pointer">
                       Open Custom Pizza Builder
                     </Button>
                   </Link>
-                  <Link href="/menu">
-                    <Button variant="outline" className="h-12 px-6 rounded-xl border-border bg-surface text-sm font-semibold">
+                  <Link href="/menu" className="cursor-pointer">
+                    <Button variant="outline" className="h-12 px-6 rounded-xl border-border bg-surface text-sm font-semibold cursor-pointer">
                       See Preset Pizzas
                     </Button>
                   </Link>
@@ -141,9 +128,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 5. How It Works (The 3-Step Process) */}
+        {/* 4. How It Works (The 3-Step Process) */}
         <section className="border-t border-border/80 bg-surface/40 py-16">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-10">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="text-xs font-bold uppercase tracking-widest text-primary">
                 Uncompromising Quality
@@ -187,8 +174,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 6. Customer Testimonials */}
-        <section id="reviews" className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        {/* 5. Customer Testimonials */}
+        <section id="reviews" className="container mx-auto px-4 py-16 sm:px-6 lg:px-10">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-secondary">
               Community Love

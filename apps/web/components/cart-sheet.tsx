@@ -65,7 +65,7 @@ export function CartSheet() {
           </div>
           <button
             onClick={closeCart}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
           >
             <X className="h-5 w-5" />
           </button>
@@ -141,7 +141,7 @@ export function CartSheet() {
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="text-muted-foreground hover:text-destructive p-1 transition-colors"
+                      className="text-muted-foreground hover:text-destructive p-1 transition-colors cursor-pointer"
                       title="Remove item"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -163,7 +163,7 @@ export function CartSheet() {
                     <div className="flex items-center gap-2 rounded-lg border border-border bg-surface px-1 py-0.5">
                       <button
                         onClick={() => updateQuantity(item.id, -1)}
-                        className="flex h-5 w-5 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted"
+                        className="flex h-5 w-5 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
                       >
                         <Minus className="h-3 w-3" />
                       </button>
@@ -172,7 +172,7 @@ export function CartSheet() {
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, 1)}
-                        className="flex h-5 w-5 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted"
+                        className="flex h-5 w-5 items-center justify-center rounded text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
                       >
                         <Plus className="h-3 w-3" />
                       </button>
@@ -208,8 +208,8 @@ export function CartSheet() {
               </div>
             </div>
 
-            <Link href="/checkout" onClick={closeCart} className="block w-full">
-              <Button className="w-full h-12 bg-primary hover:bg-primary-hover text-black font-bold rounded-xl amber-glow-sm flex items-center justify-center gap-2">
+            <Link href="/checkout" onClick={closeCart} className="block w-full cursor-pointer">
+              <Button className="w-full h-12 bg-primary hover:bg-primary-hover text-black font-bold rounded-xl amber-glow-sm flex items-center justify-center gap-2 cursor-pointer">
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="h-4 w-4" />
               </Button>

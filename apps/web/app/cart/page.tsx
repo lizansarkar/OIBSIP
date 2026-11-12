@@ -80,7 +80,7 @@ export default function CartPage() {
               <Button
                 variant="ghost"
                 onClick={clearCart}
-                className="text-xs text-muted-foreground hover:text-destructive"
+                className="text-xs text-muted-foreground hover:text-destructive cursor-pointer"
               >
                 Clear Cart
               </Button>
@@ -99,13 +99,13 @@ export default function CartPage() {
                 You haven't added any pizzas or sides yet. Discover our artisanal wood-fired specialties.
               </p>
               <div className="flex justify-center gap-3 pt-2">
-                <Link href="/menu">
-                  <Button className="bg-primary hover:bg-primary-hover text-black font-bold text-xs rounded-xl">
+                <Link href="/menu" className="cursor-pointer">
+                  <Button className="bg-primary hover:bg-primary-hover text-black font-bold text-xs rounded-xl cursor-pointer">
                     Explore Menu
                   </Button>
                 </Link>
-                <Link href="/custom-builder">
-                  <Button variant="outline" className="text-xs rounded-xl">
+                <Link href="/custom-builder" className="cursor-pointer">
+                  <Button variant="outline" className="text-xs rounded-xl cursor-pointer">
                     Build Custom Pizza
                   </Button>
                 </Link>
@@ -138,7 +138,7 @@ export default function CartPage() {
                           </h3>
                           <button
                             onClick={() => removeItem(item.id)}
-                            className="text-muted-foreground hover:text-destructive p-1 transition-colors"
+                            className="text-muted-foreground hover:text-destructive p-1 transition-colors cursor-pointer"
                             title="Remove item"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -162,7 +162,7 @@ export default function CartPage() {
                         <div className="flex items-center gap-2 rounded-xl border border-border bg-surface-elevated px-2 py-1">
                           <button
                             onClick={() => updateQuantity(item.id, -1)}
-                            className="text-muted-foreground hover:text-foreground"
+                            className="text-muted-foreground hover:text-foreground cursor-pointer"
                           >
                             <Minus className="h-3.5 w-3.5" />
                           </button>
@@ -171,7 +171,7 @@ export default function CartPage() {
                           </span>
                           <button
                             onClick={() => updateQuantity(item.id, 1)}
-                            className="text-muted-foreground hover:text-foreground"
+                            className="text-muted-foreground hover:text-foreground cursor-pointer"
                           >
                             <Plus className="h-3.5 w-3.5" />
                           </button>
@@ -254,8 +254,8 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <Link href="/checkout" className="block w-full">
-                    <Button className="w-full h-12 bg-primary hover:bg-primary-hover text-black font-extrabold text-sm rounded-xl amber-glow-sm flex items-center justify-center gap-2">
+                  <Link href="/checkout" className="block w-full cursor-pointer">
+                    <Button className="w-full h-12 bg-primary hover:bg-primary-hover text-black font-extrabold text-sm rounded-xl amber-glow-sm flex items-center justify-center gap-2 cursor-pointer">
                       <span>Proceed to Checkout</span>
                       <ArrowRight className="h-4 w-4" />
                     </Button>

@@ -47,7 +47,7 @@ export function PizzaCard({ product }: PizzaCardProps) {
         {/* Popping Out Round Pizza Image (Inspired by reference screenshot) */}
         <Link
           href={`/menu/${product.slug}`}
-          className="absolute -top-14 left-1/2 -translate-x-1/2 block"
+          className="absolute -top-14 left-1/2 -translate-x-1/2 block cursor-pointer"
         >
           <div className="relative h-32 w-32 sm:h-36 sm:w-36 overflow-hidden rounded-full border-2 border-border/60 bg-muted/20 shadow-xl transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6">
             <Image
@@ -86,7 +86,7 @@ export function PizzaCard({ product }: PizzaCardProps) {
         </div>
 
         {/* Title & Description */}
-        <Link href={`/menu/${product.slug}`} className="block group-hover:text-primary transition-colors">
+        <Link href={`/menu/${product.slug}`} className="block group-hover:text-primary transition-colors cursor-pointer">
           <h3 className="font-heading text-lg font-bold text-foreground leading-snug">
             {product.name}
           </h3>
@@ -109,7 +109,7 @@ export function PizzaCard({ product }: PizzaCardProps) {
 
           <Button
             onClick={handleAddToCart}
-            className={`h-10 px-4 rounded-xl font-bold transition-all ${
+            className={`h-10 px-4 rounded-xl font-bold transition-all cursor-pointer ${
               added
                 ? "bg-success text-white"
                 : "bg-primary hover:bg-primary-hover text-black amber-glow-sm active:scale-95"

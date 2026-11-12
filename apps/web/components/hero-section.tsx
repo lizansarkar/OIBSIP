@@ -4,180 +4,295 @@ import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@workspace/ui/components/button";
-import { Badge } from "@workspace/ui/components/badge";
-import {
-  Flame,
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  Clock,
-  Award,
-} from "lucide-react";
+import { useCartStore } from "@/lib/cart-store";
+import { toast } from "sonner";
 
 export function HeroSection() {
-  return (
-    <section className="relative overflow-hidden pt-6 pb-16 md:py-20 lg:py-24">
-      {/* Background Ember Glow Atmosphere */}
-      <div className="pointer-events-none absolute -top-40 -left-40 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
-      <div className="pointer-events-none absolute top-1/2 right-0 h-[500px] w-[500px] rounded-full bg-primary/15 blur-[140px]" />
+  const { addItem } = useCartStore();
+  const [activeCategory, setActiveCategory] = React.useState<string>("pizza");
 
-      {/* Decorative Garnish: Left Rustic Flank (Inspired by Reference Screenshot) */}
-      <div className="pointer-events-none absolute -left-16 top-1/4 hidden lg:block opacity-65 xl:opacity-85 transition-transform hover:scale-105">
-        <div className="relative h-72 w-52 overflow-hidden rounded-r-3xl shadow-2xl">
+  const categories = [
+    { id: "all", label: "All menu" },
+    { id: "pizza", label: "Pizza" },
+    { id: "snacks", label: "Sides & Snacks" },
+    { id: "desserts", label: "Desserts" },
+    { id: "drinks", label: "Beverages" },
+  ];
+
+  const handleQuickAdd = (
+    name: string,
+    price: number,
+    image: string,
+    ingredients: string
+  ) => {
+    addItem({
+      name,
+      price,
+      image,
+      description: ingredients,
+      quantity: 1,
+      size: "12-inch Medium",
+    });
+    toast.success(`Added ${name} to your cart!`, {
+      description: "Baked to perfection in our 450°C stone oven.",
+    });
+  };
+
+  return (
+    <section className="relative overflow-hidden bg-[#0D0E0D] text-[#F7F5EF] pt-4 pb-16 lg:pb-24 select-none">
+      {/* 1. Ember Sparks Floating in Corners (Inspired by Reference Screenshot) */}
+      <div className="ember-particle top-10 left-12 h-2 w-2" style={{ animationDelay: "0s" }} />
+      <div className="ember-particle top-36 left-28 h-1.5 w-1.5" style={{ animationDelay: "1.2s" }} />
+      <div className="ember-particle bottom-24 left-16 h-2 w-2" style={{ animationDelay: "2.4s" }} />
+      <div className="ember-particle top-8 right-32 h-1.5 w-1.5" style={{ animationDelay: "0.8s" }} />
+      <div className="ember-particle bottom-12 right-24 h-2.5 w-2.5" style={{ animationDelay: "1.8s" }} />
+
+      {/* 2. Left Flank: Rustic Cutting Board with Fresh Tomatoes, Peppers, and Basil */}
+      <div className="pointer-events-none absolute -left-20 sm:-left-16 md:-left-10 top-12 lg:top-20 z-10 w-48 sm:w-64 lg:w-80 h-72 sm:h-96 lg:h-[460px] opacity-90 transition-transform duration-700 hover:scale-105">
+        <div className="relative w-full h-full">
           <Image
-            src="https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=500&auto=format&fit=crop&q=80"
-            alt="Fresh heirloom ingredients on rustic board"
+            src="https://images.unsplash.com/photo-1592417817098-8f3d6910985b?w=700&auto=format&fit=crop&q=85"
+            alt="Fresh tomatoes, chili peppers, and basil on dark wooden board"
             fill
-            className="object-cover"
+            priority
+            className="object-cover rounded-r-full shadow-2xl drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]"
+            sizes="(max-width: 640px) 190px, (max-width: 1024px) 250px, 320px"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background" />
+          {/* Subtle gradient feather to blend seamlessly with dark background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0D0E0D]/90" />
         </div>
       </div>
 
-      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
-          {/* Left Column: Hero Copy & CTA */}
-          <div className="lg:col-span-6 xl:col-span-6 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold text-primary">
-              <Flame className="h-4 w-4" />
-              <span>Wood-Fired at 450°C · 48h Fermented Dough</span>
+      {/* 3. Bottom Right Flank: Fresh Floating Basil Leaves with Soft Shadow */}
+      <div className="pointer-events-none absolute -bottom-8 -right-6 lg:-bottom-12 lg:-right-4 z-10 w-44 sm:w-56 lg:w-72 h-44 sm:h-56 lg:h-72 opacity-90">
+        <div className="relative w-full h-full">
+          <Image
+            src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=600&auto=format&fit=crop&q=85"
+            alt="Fresh aromatic basil leaves"
+            fill
+            className="object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
+            sizes="(max-width: 640px) 180px, 280px"
+          />
+        </div>
+      </div>
+
+      {/* Hero Canvas Grid */}
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-12 z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-center min-h-[460px] lg:min-h-[520px] gap-8 lg:gap-4">
+          {/* Left Column: Headline, Subtext, Glowing Orange CTA Button */}
+          <div className="lg:col-span-6 xl:col-span-6 pl-0 sm:pl-16 md:pl-28 lg:pl-32 xl:pl-36 space-y-7 text-left">
+            {/* Bold Headline (Exact Match: "Лучшая пицца в Гайсине" -> "The Best Pizza in Town") */}
+            <div className="space-y-1">
+              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#F7F5EF] leading-[1.08]">
+                Best Pizza
+              </h1>
+              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#F7F5EF] leading-[1.08]">
+                in Town
+              </h1>
             </div>
 
-            <h1 className="font-heading text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl leading-[1.08]">
-              The Art of{" "}
-              <span className="relative inline-block text-primary">
-                Perfect Pizza
-                <span className="absolute left-0 -bottom-1 h-1 w-full rounded-full bg-primary/40 blur-[2px]" />
-              </span>
-              .
-            </h1>
-
-            <p className="text-base text-muted-foreground sm:text-lg leading-relaxed max-w-xl">
-              Baked in authentic Italian stone ovens with organic certified flour,
-              heirloom San Marzano tomatoes, and artisanal fior di latte.
-              Delivered piping hot within 30 minutes.
-            </p>
-
-            {/* Special Promo Banner */}
-            <div className="flex items-center gap-3 rounded-2xl border border-secondary/30 bg-secondary/10 p-3.5 max-w-lg">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-black font-bold text-xs">
-                20% OFF
-              </div>
-              <div className="text-xs">
-                <span className="font-bold text-foreground block">
-                  Limited Time Welcome Offer
-                </span>
-                <span className="text-muted-foreground">
-                  Use promo code{" "}
-                  <code className="text-secondary font-mono font-bold bg-secondary/20 px-1 py-0.5 rounded">
-                    CRUST20
-                  </code>{" "}
-                  at checkout for 20% off your entire order.
-                </span>
-              </div>
+            {/* 2-Line Subtitle in Crisp Secondary Text */}
+            <div className="space-y-1.5 text-xs sm:text-sm text-[#AAAFA5] font-normal leading-relaxed max-w-sm">
+              <p>Baked & delivered. To your door in 30 mins!</p>
+              <p className="text-[#8BBF55] font-medium">20% discount on your second pizza</p>
             </div>
 
-            {/* Action Buttons (Glowing Amber Button matching screenshot) */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Link href="/menu">
-                <Button className="h-13 px-8 rounded-2xl bg-primary hover:bg-primary-hover text-black font-extrabold text-base amber-glow transition-all active:scale-95 flex items-center gap-2.5">
-                  <span>Explore Our Menu</span>
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-              </Link>
-
-              <Link href="/custom-builder">
-                <Button
-                  variant="outline"
-                  className="h-13 px-7 rounded-2xl border-border bg-surface hover:bg-surface-elevated text-foreground font-bold text-base transition-all active:scale-95 flex items-center gap-2"
+            {/* THE FAMOUS GLOWING ORANGE BUTTON (Pixel-perfect recreation) */}
+            <div className="pt-2">
+              <Link href="/menu" className="inline-block cursor-pointer">
+                <button
+                  className="relative group cursor-pointer h-12 sm:h-13 px-8 sm:px-10 rounded-full bg-[#FF8A1F] hover:bg-[#F4770B] text-black font-extrabold text-xs sm:text-sm tracking-wider uppercase transition-all duration-300 transform active:scale-95 shadow-[0_0_40px_10px_rgba(255,138,31,0.45)] hover:shadow-[0_0_55px_15px_rgba(255,138,31,0.6)]"
                 >
-                  <Sparkles className="h-4 w-4 text-primary" />
-                  <span>Build Your Pizza</span>
-                </Button>
+                  <span className="relative z-10 font-black">EXPLORE MENU</span>
+                  {/* Additional soft radiant aura blur */}
+                  <span className="absolute inset-0 rounded-full bg-[#FF8A1F] blur-lg opacity-70 group-hover:opacity-100 transition-opacity" />
+                </button>
               </Link>
             </div>
+          </div>
 
-            {/* Micro Trust Indicators */}
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border/60 max-w-lg">
-              <div className="flex items-center gap-2">
-                <Award className="h-4 w-4 text-primary shrink-0" />
-                <span className="text-xs font-semibold text-foreground">
-                  Award Winning
+          {/* Right Column: Sliced Overhead Pizza with Concentric Green Radar Callouts */}
+          <div className="lg:col-span-6 xl:col-span-6 relative flex justify-center items-center py-6">
+            {/* Ambient Warm Underglow */}
+            <div className="absolute h-72 w-72 sm:h-96 sm:w-96 rounded-full bg-[#FF8A1F]/15 blur-[90px] pointer-events-none" />
+
+            <div className="relative w-[310px] h-[310px] sm:w-[420px] sm:h-[420px] lg:w-[460px] lg:h-[460px]">
+              {/* Concentric Guide Arc Line (SVG overlay concentric with pizza edge) */}
+              <svg
+                className="absolute -inset-4 sm:-inset-6 lg:-inset-8 w-[calc(100%+32px)] sm:w-[calc(100%+48px)] lg:w-[calc(100%+64px)] h-[calc(100%+32px)] sm:h-[calc(100%+48px)] lg:h-[calc(100%+64px)] pointer-events-none z-10"
+                viewBox="0 0 500 500"
+                fill="none"
+              >
+                {/* Thin delicate guide arc */}
+                <path
+                  d="M 250 30 A 220 220 0 0 0 35 320"
+                  stroke="#8BBF55"
+                  strokeWidth="1"
+                  strokeOpacity="0.45"
+                  strokeDasharray="4 3"
+                />
+              </svg>
+
+              {/* Pizza Image with Real Slices Cut */}
+              <div className="relative w-full h-full rounded-full overflow-hidden shadow-2xl drop-shadow-[0_25px_60px_rgba(0,0,0,0.95)] border-2 border-white/5">
+                <Image
+                  src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=950&auto=format&fit=crop&q=85"
+                  alt="Wood-Fired Artisanal Pizza cut into slices"
+                  fill
+                  priority
+                  className="object-cover"
+                  sizes="(max-width: 640px) 310px, (max-width: 1024px) 420px, 460px"
+                />
+              </div>
+
+              {/* 4 Green Pointer Indicators (Matching the Russian text in screenshot translated to English) */}
+
+              {/* Dot 1: Top ("Только свежие продукты" -> "Only fresh ingredients") */}
+              <div className="absolute -top-3 left-6 sm:top-2 sm:-left-4 z-20 flex items-center gap-2 group cursor-pointer">
+                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#8BBF55]/30 ring-2 ring-[#8BBF55] animate-pulse">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#8BBF55]" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[#F7F5EF] bg-[#171816]/90 border border-white/10 px-2.5 py-1 rounded-full shadow-lg backdrop-blur-sm">
+                  Only fresh ingredients
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-secondary shrink-0" />
-                <span className="text-xs font-semibold text-foreground">
-                  30 Min Delivery
+
+              {/* Dot 2: Upper Mid ("Бесплатная доставка" -> "Free 30-min delivery") */}
+              <div className="absolute top-28 -left-8 sm:top-36 sm:-left-12 z-20 flex items-center gap-2 group cursor-pointer">
+                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#8BBF55]/30 ring-2 ring-[#8BBF55]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#8BBF55]" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[#F7F5EF] bg-[#171816]/90 border border-white/10 px-2.5 py-1 rounded-full shadow-lg backdrop-blur-sm">
+                  Free 30-min delivery
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-warning shrink-0" />
-                <span className="text-xs font-semibold text-foreground">
-                  100% Organic
+
+              {/* Dot 3: Lower Mid ("Напиток в подарок" -> "Craft soda as a gift") */}
+              <div className="absolute top-56 -left-6 sm:top-68 sm:-left-10 z-20 flex items-center gap-2 group cursor-pointer">
+                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#8BBF55]/30 ring-2 ring-[#8BBF55]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#8BBF55]" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[#F7F5EF] bg-[#171816]/90 border border-white/10 px-2.5 py-1 rounded-full shadow-lg backdrop-blur-sm">
+                  Craft soda as a gift
+                </span>
+              </div>
+
+              {/* Dot 4: Bottom ("Эксклюзивные рецепты" -> "Exclusive 48h recipes") */}
+              <div className="absolute -bottom-2 left-4 sm:bottom-4 sm:-left-2 z-20 flex items-center gap-2 group cursor-pointer">
+                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#8BBF55]/30 ring-2 ring-[#8BBF55]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#8BBF55]" />
+                </span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[#F7F5EF] bg-[#171816]/90 border border-white/10 px-2.5 py-1 rounded-full shadow-lg backdrop-blur-sm">
+                  Exclusive 48h recipe
                 </span>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right Column: Large Wood-Fired Pizza with Interactive Radial Callouts */}
-          <div className="lg:col-span-6 xl:col-span-6 relative flex justify-center items-center">
-            {/* Ambient circular glow */}
-            <div className="absolute h-72 w-72 sm:h-96 sm:w-96 rounded-full bg-primary/20 blur-[80px]" />
+        {/* 4. Category Filter Pills Bar (Centered exactly as in screenshot) */}
+        <div className="mt-10 sm:mt-14 flex items-center justify-center gap-3 sm:gap-6 overflow-x-auto no-scrollbar py-2">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`text-xs sm:text-sm font-medium transition-all cursor-pointer whitespace-nowrap px-4 py-1.5 rounded-full ${
+                  isActive
+                    ? "border border-[#8BBF55] text-[#F7F5EF] bg-transparent shadow-[0_0_15px_rgba(139,191,85,0.2)]"
+                    : "text-[#AAAFA5] hover:text-[#F7F5EF] border border-transparent"
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
 
-            <div className="relative h-[320px] w-[320px] sm:h-[440px] sm:w-[440px] md:h-[480px] md:w-[480px] animate-in fade-in zoom-in duration-700">
+        {/* 5. Bottom Preview Cards (Exact Match to Pepperoni and Carbonara in the Screenshot) */}
+        <div className="mt-8 sm:mt-10 flex flex-wrap justify-center items-center gap-6 lg:gap-10">
+          {/* Card 1: Pepperoni */}
+          <div className="flex items-center gap-4 rounded-3xl border border-white/10 bg-[#171816] p-4 sm:p-5 shadow-2xl hover:border-white/20 transition-all duration-300 w-full sm:w-[360px] md:w-[380px]">
+            {/* Round Pizza Plate */}
+            <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-full border-2 border-white/10 shadow-lg">
               <Image
-                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=900&auto=format&fit=crop&q=80"
-                alt="Signature Wood-Fired Artisanal Pizza"
+                src="https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&auto=format&fit=crop&q=80"
+                alt="Pepperoni pizza"
                 fill
-                priority
-                className="object-cover rounded-full shadow-2xl drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-4 border-white/5"
-                sizes="(max-width: 640px) 320px, (max-width: 768px) 440px, 480px"
+                className="object-cover"
+                sizes="112px"
               />
-
-              {/* Interactive Callout 1 (Top Left) */}
-              <div className="absolute top-4 -left-4 sm:top-8 sm:-left-8 z-10 flex items-center gap-2 rounded-full border border-secondary/40 bg-surface/90 px-3.5 py-1.5 backdrop-blur-md shadow-xl transition-transform hover:scale-105">
-                <span className="flex h-2.5 w-2.5 rounded-full bg-secondary animate-ping" />
-                <span className="text-xs font-bold text-foreground">
-                  48h Cold Fermented Sourdough
-                </span>
-              </div>
-
-              {/* Interactive Callout 2 (Middle Left) */}
-              <div className="absolute top-1/2 -left-6 sm:-left-12 -translate-y-1/2 z-10 flex items-center gap-2 rounded-full border border-secondary/40 bg-surface/90 px-3.5 py-1.5 backdrop-blur-md shadow-xl transition-transform hover:scale-105">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
-                <span className="text-xs font-bold text-foreground">
-                  San Marzano Heirloom Sauce
-                </span>
-              </div>
-
-              {/* Interactive Callout 3 (Bottom Left) */}
-              <div className="absolute bottom-10 -left-2 sm:bottom-14 sm:-left-6 z-10 flex items-center gap-2 rounded-full border border-secondary/40 bg-surface/90 px-3.5 py-1.5 backdrop-blur-md shadow-xl transition-transform hover:scale-105">
-                <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
-                <span className="text-xs font-bold text-foreground">
-                  Fior di Latte & Buffalo Mozzarella
-                </span>
-              </div>
-
-              {/* Interactive Callout 4 (Bottom Right) */}
-              <div className="absolute -bottom-4 right-6 sm:bottom-4 sm:right-0 z-10 flex items-center gap-2 rounded-full border border-primary/40 bg-surface/90 px-3.5 py-1.5 backdrop-blur-md shadow-xl transition-transform hover:scale-105">
-                <span className="flex h-2.5 w-2.5 rounded-full bg-primary" />
-                <span className="text-xs font-bold text-foreground">
-                  Stone Oven Baked at 450°C
-                </span>
-              </div>
             </div>
 
-            {/* Decorative Garnish: Floating Basil Leaf (Bottom Right of Screenshot) */}
-            <div className="pointer-events-none absolute -bottom-10 right-0 hidden sm:block opacity-75">
-              <div className="relative h-20 w-20">
-                <Image
-                  src="https://images.unsplash.com/photo-1608686207856-001b95cf60ca?w=200&auto=format&fit=crop&q=80"
-                  alt="Fresh basil garnish"
-                  fill
-                  className="object-contain"
-                />
+            {/* Info */}
+            <div className="flex-1 space-y-1.5">
+              <h3 className="font-heading text-base sm:text-lg font-bold text-white">
+                Pepperoni
+              </h3>
+              <p className="text-[11px] text-[#AAAFA5] line-clamp-2 leading-tight">
+                Mozzarella, sausage, tomatoes, oregano, chili
+              </p>
+              <div className="pt-1">
+                <span className="font-heading text-sm sm:text-base font-extrabold text-white">
+                  $14.50 <span className="text-[10px] text-[#AAAFA5] font-normal">/ 120 грн</span>
+                </span>
               </div>
+              <button
+                onClick={() =>
+                  handleQuickAdd(
+                    "Pepperoni",
+                    14.5,
+                    "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&auto=format&fit=crop&q=80",
+                    "Mozzarella, sausage, tomatoes, oregano, chili"
+                  )
+                }
+                className="w-full mt-2 h-8 rounded-full bg-[#FF8A1F] hover:bg-[#F4770B] text-black font-extrabold text-[11px] uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-[0_0_18px_rgba(255,138,31,0.35)] active:scale-95"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          {/* Card 2: Carbonara */}
+          <div className="flex items-center gap-4 rounded-3xl border border-white/10 bg-[#171816] p-4 sm:p-5 shadow-2xl hover:border-white/20 transition-all duration-300 w-full sm:w-[360px] md:w-[380px]">
+            {/* Round Pizza Plate */}
+            <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0 overflow-hidden rounded-full border-2 border-white/10 shadow-lg">
+              <Image
+                src="https://images.unsplash.com/photo-1573821663912-569905455b1c?w=400&auto=format&fit=crop&q=80"
+                alt="Carbonara pizza"
+                fill
+                className="object-cover"
+                sizes="112px"
+              />
+            </div>
+
+            {/* Info */}
+            <div className="flex-1 space-y-1.5">
+              <h3 className="font-heading text-base sm:text-lg font-bold text-white">
+                Carbonara
+              </h3>
+              <p className="text-[11px] text-[#AAAFA5] line-clamp-2 leading-tight">
+                Mozzarella, cured bacon, tomatoes, oregano, farm egg
+              </p>
+              <div className="pt-1">
+                <span className="font-heading text-sm sm:text-base font-extrabold text-white">
+                  $13.50 <span className="text-[10px] text-[#AAAFA5] font-normal">/ 110 грн</span>
+                </span>
+              </div>
+              <button
+                onClick={() =>
+                  handleQuickAdd(
+                    "Carbonara",
+                    13.5,
+                    "https://images.unsplash.com/photo-1573821663912-569905455b1c?w=400&auto=format&fit=crop&q=80",
+                    "Mozzarella, cured bacon, tomatoes, oregano, farm egg"
+                  )
+                }
+                className="w-full mt-2 h-8 rounded-full bg-[#FF8A1F] hover:bg-[#F4770B] text-black font-extrabold text-[11px] uppercase tracking-wider transition-all duration-200 cursor-pointer shadow-[0_0_18px_rgba(255,138,31,0.35)] active:scale-95"
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>

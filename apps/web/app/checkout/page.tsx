@@ -305,7 +305,7 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("razorpay")}
-                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all ${
+                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all cursor-pointer ${
                         paymentMethod === "razorpay"
                           ? "border-primary bg-primary/10 ring-1 ring-primary"
                           : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -327,7 +327,7 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentMethod("cod")}
-                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all ${
+                      className={`flex items-center gap-3 rounded-2xl border p-4 text-left transition-all cursor-pointer ${
                         paymentMethod === "cod"
                           ? "border-secondary bg-secondary/10 ring-1 ring-secondary"
                           : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -401,7 +401,7 @@ export default function CheckoutPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting || items.length === 0}
-                    className="w-full h-12 bg-primary hover:bg-primary-hover text-black font-extrabold text-sm rounded-xl amber-glow-sm flex items-center justify-center gap-2"
+                    className="w-full h-12 bg-primary hover:bg-primary-hover text-black font-extrabold text-sm rounded-xl amber-glow-sm flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">

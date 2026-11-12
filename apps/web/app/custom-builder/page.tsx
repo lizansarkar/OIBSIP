@@ -150,7 +150,7 @@ export default function CustomPizzaBuilderPage() {
                     <button
                       key={s.size}
                       onClick={() => setSelectedSize(s.size)}
-                      className={`rounded-2xl border p-4 text-left transition-all ${
+                      className={`rounded-2xl border p-4 text-left transition-all cursor-pointer ${
                         selectedSize === s.size
                           ? "border-primary bg-primary/10 shadow-md ring-1 ring-primary"
                           : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -187,7 +187,7 @@ export default function CustomPizzaBuilderPage() {
                       <button
                         key={base.id}
                         onClick={() => setSelectedBase(base)}
-                        className={`flex gap-3 rounded-2xl border p-3.5 text-left transition-all ${
+                        className={`flex gap-3 rounded-2xl border p-3.5 text-left transition-all cursor-pointer ${
                           isSelected
                             ? "border-primary bg-primary/10 shadow-md ring-1 ring-primary"
                             : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -236,7 +236,7 @@ export default function CustomPizzaBuilderPage() {
                       <button
                         key={sauce.id}
                         onClick={() => setSelectedSauce(sauce)}
-                        className={`rounded-2xl border p-3.5 text-left transition-all ${
+                        className={`rounded-2xl border p-3.5 text-left transition-all cursor-pointer ${
                           isSelected
                             ? "border-primary bg-primary/10 shadow-md ring-1 ring-primary"
                             : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -274,7 +274,7 @@ export default function CustomPizzaBuilderPage() {
                       <button
                         key={cheese.id}
                         onClick={() => setSelectedCheese(cheese)}
-                        className={`rounded-2xl border p-3.5 text-left transition-all ${
+                        className={`rounded-2xl border p-3.5 text-left transition-all cursor-pointer ${
                           isSelected
                             ? "border-primary bg-primary/10 shadow-md ring-1 ring-primary"
                             : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -314,7 +314,7 @@ export default function CustomPizzaBuilderPage() {
                       <button
                         key={veg.id}
                         onClick={() => toggleVeggie(veg)}
-                        className={`rounded-xl border p-3 text-left transition-all ${
+                        className={`rounded-xl border p-3 text-left transition-all cursor-pointer ${
                           isSelected
                             ? "border-secondary bg-secondary/15 ring-1 ring-secondary"
                             : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -352,7 +352,7 @@ export default function CustomPizzaBuilderPage() {
                       <button
                         key={meat.id}
                         onClick={() => toggleMeat(meat)}
-                        className={`rounded-xl border p-3 text-left transition-all ${
+                        className={`rounded-xl border p-3 text-left transition-all cursor-pointer ${
                           isSelected
                             ? "border-primary bg-primary/15 ring-1 ring-primary"
                             : "border-border bg-surface-elevated/40 hover:bg-surface-elevated"
@@ -449,7 +449,7 @@ export default function CustomPizzaBuilderPage() {
                     <div className="flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-2 py-1">
                       <button
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="text-muted-foreground hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground cursor-pointer"
                       >
                         <Minus className="h-3.5 w-3.5" />
                       </button>
@@ -458,7 +458,7 @@ export default function CustomPizzaBuilderPage() {
                       </span>
                       <button
                         onClick={() => setQuantity(quantity + 1)}
-                        className="text-muted-foreground hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground cursor-pointer"
                       >
                         <Plus className="h-3.5 w-3.5" />
                       </button>
@@ -476,7 +476,7 @@ export default function CustomPizzaBuilderPage() {
 
                   <Button
                     onClick={handleAddToCart}
-                    className="w-full h-12 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm amber-glow-sm flex items-center justify-center gap-2"
+                    className="w-full h-12 rounded-xl bg-primary hover:bg-primary-hover text-black font-extrabold text-sm amber-glow-sm flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <ShoppingBag className="h-4 w-4" />
                     <span>Add Custom Pizza to Cart</span>

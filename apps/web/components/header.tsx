@@ -12,14 +12,14 @@ import {
   Menu as MenuIcon,
   X,
   User,
-  Flame,
-  Sparkles,
+  Pizza,
 } from "lucide-react";
 
 export function Header() {
   const pathname = usePathname();
   const { toggleCart, getItemCount, getSubtotal } = useCartStore();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [callbackModal, setCallbackModal] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -30,153 +30,197 @@ export function Header() {
   const subtotal = mounted ? getSubtotal() : 0;
 
   const navLinks = [
-    { label: "Home", href: "/" },
     { label: "Menu", href: "/menu" },
-    { label: "Build Pizza", href: "/custom-builder", highlight: true },
-    { label: "Deals & Offers", href: "/#offers" },
+    { label: "Deals", href: "/#deals" },
     { label: "Reviews", href: "/#reviews" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Contacts", href: "/#contacts" },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/80 bg-background/90 backdrop-blur-md transition-all">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Left: Mobile Toggle & Brand Logo */}
-        <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-40 w-full border-b border-white/5 bg-[#0D0E0D]/95 backdrop-blur-md">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-10">
+        {/* Left: Mobile/Tablet Hamburger + Brand Logo (Inspired by Screenshot) */}
+        <div className="flex items-center gap-4">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-surface text-muted-foreground hover:text-foreground md:hidden"
-            aria-label="Open mobile menu"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl text-[#8BBF55] hover:text-white transition-colors"
+            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-6 w-6" />
             ) : (
-              <MenuIcon className="h-5 w-5" />
+              <div className="space-y-1.5 flex flex-col justify-center items-center">
+                <span className="block h-0.5 w-6 bg-[#8BBF55] rounded-full" />
+                <span className="block h-0.5 w-4 bg-[#8BBF55] rounded-full mr-2" />
+                <span className="block h-0.5 w-6 bg-[#8BBF55] rounded-full" />
+              </div>
             )}
           </button>
 
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary-hover text-black shadow-md shadow-primary/20 group-hover:scale-105 transition-transform">
-              <Flame className="h-6 w-6 fill-black stroke-black" />
+          {/* Brand Logo: Pizza slice outline + Mario / Crust & Co. */}
+          <Link href="/" className="flex items-center gap-2 group cursor-pointer">
+            <div className="flex h-9 w-9 items-center justify-center text-[#F7F5EF] group-hover:text-primary transition-colors">
+              <Pizza className="h-7 w-7 stroke-[1.8]" />
             </div>
-            <div>
-              <span className="font-heading text-xl font-extrabold tracking-tight text-foreground block leading-none">
-                CRUST <span className="text-primary">&</span> CO.
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground block mt-0.5">
-                Artisanal Wood-Fired
-              </span>
-            </div>
+            <span className="font-heading text-2xl font-extrabold tracking-tight text-[#F7F5EF] font-sans">
+              Mario <span className="text-xs font-semibold uppercase tracking-widest text-[#AAAFA5] block text-[9px] -mt-1">CRUST & CO.</span>
+            </span>
           </Link>
         </div>
 
-        {/* Center: Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1.5 lg:gap-2">
+        {/* Center: Clean Nav Links matching the screenshot ("Меню", "Акции", "Отзывы", "Контакты") */}
+        <nav className="hidden md:flex items-center gap-7 lg:gap-10">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.label}
                 href={link.href}
-                className={`relative px-3.5 py-1.5 rounded-full text-sm font-medium transition-all ${
+                className={`text-sm font-medium transition-colors cursor-pointer ${
                   isActive
-                    ? "text-primary font-semibold bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-surface-elevated"
-                } ${link.highlight ? "border border-primary/30 text-primary" : ""}`}
+                    ? "text-[#F7F5EF] font-semibold"
+                    : "text-[#AAAFA5] hover:text-[#F7F5EF]"
+                }`}
               >
-                {link.highlight && (
-                  <Sparkles className="inline-block h-3.5 w-3.5 mr-1 text-primary" />
-                )}
                 {link.label}
               </Link>
             );
           })}
         </nav>
 
-        {/* Right: Hotline, Theme, Account & Cart Button */}
-        <div className="flex items-center gap-2.5 sm:gap-3.5">
-          {/* Hotline (inspired by reference image) */}
-          <div className="hidden xl:flex items-center gap-2.5 pl-2 pr-1 py-1 rounded-2xl bg-surface border border-border">
-            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary/15 text-secondary">
+        {/* Right: Phone Hotline + Green Cart Button matching Screenshot */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          {/* Phone Hotline with Call Back text */}
+          <div className="hidden sm:flex items-center gap-2.5 text-left">
+            <a
+              href="tel:+10936921574"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#8BBF55]/15 text-[#8BBF55] hover:scale-105 transition-transform cursor-pointer"
+              title="Call Kitchen Hotline"
+            >
               <PhoneCall className="h-4 w-4" />
-            </div>
-            <div className="text-left text-xs leading-tight pr-2">
+            </a>
+            <div className="leading-tight">
               <a
-                href="tel:+18006921574"
-                className="font-bold text-foreground hover:text-primary transition-colors block"
+                href="tel:+10936921574"
+                className="text-xs font-bold text-[#F7F5EF] hover:text-primary transition-colors block cursor-pointer"
               >
-                +1 (800) 692-1574
+                +1 (093) 692-15-74
               </a>
-              <span className="text-[10px] text-secondary font-medium">
+              <button
+                onClick={() => setCallbackModal(true)}
+                className="text-[10px] text-[#8BBF55] hover:underline block font-medium cursor-pointer"
+              >
                 Call back anytime
-              </span>
+              </button>
             </div>
           </div>
 
           <ThemeToggle />
 
-          {/* Account / Admin Access */}
+          {/* Account Shortcut */}
           <Link
             href="/login"
-            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-surface text-muted-foreground hover:text-foreground hover:bg-surface-elevated transition-colors"
-            title="Customer / Admin Account"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-[#171816] text-[#AAAFA5] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+            title="Account / Admin Portal"
           >
             <User className="h-4 w-4" />
           </Link>
 
-          {/* Cart Pill (High Contrast Green Button matching screenshot) */}
-          <Button
+          {/* Cart Pill (Exact match to green basket in screenshot) */}
+          <button
             onClick={toggleCart}
-            className="h-10 px-3.5 sm:px-4 rounded-xl bg-secondary hover:bg-secondary/90 text-black font-bold green-glow-sm flex items-center gap-2.5 transition-all active:scale-95"
+            className="h-10 px-4 rounded-xl border border-[#8BBF55]/30 bg-[#8BBF55]/10 hover:bg-[#8BBF55]/20 text-[#8BBF55] font-bold green-glow-sm flex items-center gap-2.5 transition-all active:scale-95 cursor-pointer"
             aria-label="View Shopping Cart"
           >
             <div className="relative">
-              <ShoppingBag className="h-4 w-4 stroke-[2.5]" />
+              <ShoppingBag className="h-4 w-4 stroke-[2.2]" />
               {itemCount > 0 && (
-                <span className="absolute -top-1.5 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-extrabold text-secondary">
+                <span className="absolute -top-2 -right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#8BBF55] text-[10px] font-black text-black">
                   {itemCount}
                 </span>
               )}
             </div>
-            <span className="hidden sm:inline text-xs font-extrabold tracking-wide">
+            <span className="text-xs font-extrabold tracking-wide text-white">
               {itemCount > 0 ? `$${subtotal.toFixed(2)}` : "Cart"}
             </span>
-          </Button>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Sheet */}
+      {/* Quick Callback Modal */}
+      {callbackModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm cursor-pointer"
+            onClick={() => setCallbackModal(false)}
+          />
+          <div className="relative z-50 w-full max-w-sm rounded-3xl border border-white/10 bg-[#171816] p-6 shadow-2xl space-y-4">
+            <h3 className="font-heading text-lg font-bold text-white">
+              Request a Callback
+            </h3>
+            <p className="text-xs text-[#AAAFA5]">
+              Leave your phone number and our artisanal kitchen will call you within 2 minutes.
+            </p>
+            <input
+              type="tel"
+              placeholder="+1 (000) 000-0000"
+              className="w-full rounded-xl border border-white/10 bg-[#20221E] px-3.5 py-2.5 text-xs text-white placeholder:text-[#70766D] focus:outline-none focus:ring-1 focus:ring-primary"
+            />
+            <div className="flex justify-end gap-2 pt-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCallbackModal(false)}
+                className="cursor-pointer text-xs"
+              >
+                Cancel
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => {
+                  setCallbackModal(false);
+                  alert("Thank you! Our kitchen team is calling you shortly.");
+                }}
+                className="bg-[#8BBF55] hover:bg-[#8BBF55]/90 text-black font-bold text-xs cursor-pointer"
+              >
+                Call Me
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-surface px-4 py-5 space-y-4">
-          <div className="flex flex-col space-y-2">
+        <div className="md:hidden border-b border-white/10 bg-[#171816] px-5 py-6 space-y-4">
+          <div className="flex flex-col space-y-3">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between py-2 px-3 rounded-xl text-sm font-medium text-foreground hover:bg-surface-elevated transition-colors"
+                className="text-sm font-semibold text-[#F7F5EF] hover:text-primary transition-colors cursor-pointer py-1"
               >
-                <span>{link.label}</span>
-                {link.highlight && (
-                  <span className="text-[11px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                    Customizer
-                  </span>
-                )}
+                {link.label}
               </Link>
             ))}
+            <Link
+              href="/custom-builder"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-sm font-semibold text-primary hover:underline cursor-pointer py-1"
+            >
+              Custom Pizza Builder ✨
+            </Link>
           </div>
 
-          <div className="pt-3 border-t border-border flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <PhoneCall className="h-3.5 w-3.5 text-secondary" />
-              <span>+1 (800) 692-1574</span>
-            </div>
+          <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs">
+            <span className="text-[#8BBF55] font-semibold">+1 (093) 692-15-74</span>
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-primary font-semibold"
+              className="text-[#AAAFA5] hover:text-white cursor-pointer"
             >
-              Sign In / Account
+              Sign In
             </Link>
           </div>
         </div>
