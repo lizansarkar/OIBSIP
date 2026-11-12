@@ -131,6 +131,18 @@
   --radius: 0.875rem;
 }
 
+/* Global Cursor Pointer Enforcement */
+button,
+[role="button"],
+a,
+input[type="button"],
+input[type="submit"],
+select,
+summary,
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
 @layer base {
   * {
     @apply border-border;
